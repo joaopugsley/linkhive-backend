@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 
+// services
+import UserService from "../services/userService";
+
 // utils
 import validateEmail from "../utils/validateEmail";
 import generateJwtToken from "../utils/auth/generateJwtToken";

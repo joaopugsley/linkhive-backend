@@ -13,12 +13,12 @@ class Database {
 
     public connect(): void {
         console.log("Connecting to database...");
-        const mongo_url: string = `mongodb+srv://linkhive:${process.env.MONGO_URL_PASSWORD}@linkhive.jbsdcfl.mongodb.net/linkhive?retryWrites=true&w=majority`;
+        const mongo_url: string = process.env.MONGO_URL || "";
         mongoose.connect(mongo_url).then(() => {
-            console.log("Connected to mongo database.")
+            console.log("Connected to mongo database.");
         }).catch(err => {
-            console.error("Could not connect to mongo database.", err)
-        })
+            console.error("Could not connect to mongo database.", err);
+        });
     }
 
 }

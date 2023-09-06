@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 
+// services
+import UserService from "../services/userService";
+
 // utils
 import validateEmail from "../utils/validateEmail";
 import validatePassword from "../utils/validatePassword";
@@ -45,17 +48,17 @@ const registerController = async (req: Request, res: Response) => {
         })
     }
 
-    const usernameExists: boolean = await userSchema.findOne({ username: username }).exec() !== null;
+    const usernameAvailable: boolean = await UserService.checkUsername(username);
 
-    if(usernameExists === true) {
+    if(!usernameAvailable) {
         return res.status(400).json({
             message: "Username already taken."
         })
     }
 
-    const emailExists: boolean = await userSchema.findOne({ email: email }).exec() !== null;
+    const emailAvailable: boolean = await UserService.checkEmail(email);
 
-    if(emailExists === true) {
+    if(!emailAvailable) {
         return res.status(400).json({
             message: "Email already registered."
         })
